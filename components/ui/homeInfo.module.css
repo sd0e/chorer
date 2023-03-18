@@ -1,0 +1,16 @@
+.wrapper {
+    display: block;
+    text-align: center;
+}
+
+.title {
+    font-weight: 600;
+    color: rgba(11, 11, 11, 0.8);
+    margin-bottom: 2rem;
+}
+
+.description {
+    font-weight: 400;
+    font-size: 1.2rem;
+    color: rgba(11, 11, 11, 0.6);
+}

@@ -1,0 +1,12 @@
+.disc {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1.5rem;
+}
+
+.icon {
+    color: #f2f2f2;
+}

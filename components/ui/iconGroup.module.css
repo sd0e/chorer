@@ -1,0 +1,12 @@
+.container {
+    display: block;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.iconHolder {
+    position: relative;
+}
