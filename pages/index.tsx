@@ -11,7 +11,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={classes.content}>
-        <HomeInfo />
+        <HomeInfo onAuthRequest={() => window.alert('Auth requested')} />
       </div>
     </Layout>
   )
