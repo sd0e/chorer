@@ -2,8 +2,11 @@ import Head from 'next/head';
 import Layout, { siteName } from '@/components/layout';
 import classes from '@/styles/Home.module.css';
 import HomeInfo from '@/components/ui/homeInfo';
+import { useRouter } from 'next/router';
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <Layout>
       <Head>
@@ -11,7 +14,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={classes.content}>
-        <HomeInfo onAuthRequest={() => window.alert('Auth requested')} />
+        <HomeInfo onAuthRequest={() => router.push('/auth')} />
       </div>
     </Layout>
   )
