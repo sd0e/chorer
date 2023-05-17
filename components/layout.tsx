@@ -39,6 +39,8 @@ export default function Layout({ children, title }: { children: React.ReactNode,
                     <meta name="description" content={siteDescription} />
                     <meta name="og:title" content={siteName} />
                     <meta name="twitter:card" content="summary_large_image" />
+                    <meta name="viewport" content="width=device-width, initial-scale=1" />
+                    <link rel="icon" href="/favicon.ico" />
                 </Head>
                 <motion.main
                     style={{ height: '100%' }}

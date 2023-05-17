@@ -17,6 +17,7 @@
     "@types/react-dom": "18.0.11",
     "eslint": "8.35.0",
     "eslint-config-next": "13.2.1",
+    "firebase": "^9.22.0",
     "framer-motion": "^10.0.1",
     "gray-matter": "^4.0.3",
     "next": "13.2.1",
