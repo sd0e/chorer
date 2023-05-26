@@ -4,9 +4,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url(https://cdn.sebdoe.com/gradient-3000w.png);
-    background-size: cover;
-    background-repeat: none;
+}
+
+.background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    transform: scale(1.1);
+    object-fit: cover;
+    z-index: -1;
 }
 
 .inner {
@@ -15,4 +21,5 @@
     border-radius: 0.25rem;
     box-shadow: #000000;
     font-family: 'Inter';
+    z-index: 1;
 }

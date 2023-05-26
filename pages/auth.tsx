@@ -2,6 +2,8 @@ import Layout from '@/components/layout';
 import classes from '@/styles/Auth.module.css';
 import { useRouter } from 'next/router';
 import { Button, TextField, Stack } from '@mui/material';
+import gradient from '../assets/gradient.jpg';
+import Image from 'next/image';
 
 export default function Auth() {
   const router = useRouter();
@@ -9,6 +11,7 @@ export default function Auth() {
   return (
     <Layout title="Continue to Chorer">
       <div className={classes.content}>
+        <Image src={gradient} alt="A gradient background image" className={classes.background} />
         <div className={classes.inner}>
           <h1>Continue to Chorer</h1>
           <TextField placeholder="Email" variant="outlined" type="email" />
