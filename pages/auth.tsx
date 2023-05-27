@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import { Button, TextField, Stack } from '@mui/material';
 import gradient from '../assets/gradient.jpg';
 import Image from 'next/image';
+import signInUser from '@/firebase/signInUser';
+import signOutUser from '@/firebase/signOutUser';
 
 export default function Auth() {
   const router = useRouter();
