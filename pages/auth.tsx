@@ -13,12 +13,16 @@ export default function Auth() {
       <div className={classes.content}>
         <Image src={gradient} alt="A gradient background image" className={classes.background} />
         <div className={classes.inner}>
-          <h1>Continue to Chorer</h1>
-          <TextField placeholder="Email" variant="outlined" type="email" />
-          <TextField placeholder="Password" variant="outlined" type="password" />
-          <Stack direction="row" spacing={4}>
-            <Button variant="outlined" color="primary">Sign In</Button>
-            <Button variant="outlined" color="secondary">Sign Up</Button>
+          <Stack direction="column" spacing={8}>
+            <h1>Continue to Chorer</h1>
+            <div>
+              <TextField placeholder="Email" variant="outlined" type="email" />
+              <TextField placeholder="Password" variant="outlined" type="password" />
+            </div>
+            <Stack direction="row" spacing={4}>
+              <Button variant="outlined" color="primary">Sign In</Button>
+              <Button variant="outlined" color="secondary">Sign Up</Button>
+            </Stack>
           </Stack>
         </div>
       </div>
