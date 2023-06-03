@@ -6,9 +6,13 @@ import gradient from '../assets/gradient.jpg';
 import Image from 'next/image';
 import signInUser from '@/firebase/signInUser';
 import signOutUser from '@/firebase/signOutUser';
+import { useState } from 'react';
 
 export default function Auth() {
   const router = useRouter();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <Layout title="Continue to Chorer">
@@ -18,8 +22,8 @@ export default function Auth() {
           <Stack direction="column" spacing={8}>
             <h1>Continue to Chorer</h1>
             <div>
-              <TextField placeholder="Email" variant="outlined" type="email" />
-              <TextField placeholder="Password" variant="outlined" type="password" />
+              <TextField placeholder="Email" variant="outlined" type="email" onChange={e => setEmail(e.target.value)} />
+              <TextField placeholder="Password" variant="outlined" type="password" onChange={e => setPassword(e.target.value)} />
             </div>
             <Stack direction="row" spacing={4}>
               <Button variant="outlined" color="primary">Sign In</Button>
