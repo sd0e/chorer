@@ -6,7 +6,7 @@ export default function Dashboard() {
   const router = useRouter();
 
   return (
-    <Layout title="Dashboard">
+    <Layout title="Dashboard" leftMenu>
       <div className={classes.content}>
         Dashboard
       </div>
