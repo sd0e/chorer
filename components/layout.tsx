@@ -9,7 +9,7 @@ export const siteDescription = 'Chore Management System';
 
 const inter = Inter({ subsets: ['latin'], weight: ['600', '700'] });
 
-export default function Layout({ children, title }: { children: React.ReactNode, title?: string }) {
+export default function Layout({ children, title, fullPage }: { children: React.ReactNode, title?: string, fullPage?: boolean }) {
     const variants = {
         hidden: { opacity: 0, x: 0, y: 400 },
         enter: { opacity: 1, x: 0, y: 0 },
