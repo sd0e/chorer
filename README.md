@@ -1,3 +1,3 @@
-# portfolio
+# Chorer
 
-This is my personal website, and also my first Next.js project!
+The frontend for the Chorer chore management tracker software.
