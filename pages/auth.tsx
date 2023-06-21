@@ -1,3 +1,5 @@
+// import necessary libraries
+
 import Layout from '@/components/layout';
 import classes from '@/styles/Auth.module.css';
 import { useRouter } from 'next/router';
@@ -9,11 +11,13 @@ import createUser from '@/firebase/createUser';
 import { useState } from 'react';
 
 export default function Auth() {
+  // initialise constants
   const router = useRouter();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // define sign-in and sign-out behaviour
   const signIn = () => {
     signInUser(email, password).then(() => router.push('/dashboard'));
   }
@@ -22,6 +26,7 @@ export default function Auth() {
     createUser(email, password).then(() => router.push('/onboarding'));
   }
 
+  // return the JSX element, contained within the Layout container
   return (
     <Layout title="Continue to Chorer">
       <div className={classes.content}>
