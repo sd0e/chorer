@@ -50,8 +50,10 @@ export function Get(path: String): Promise<GetResponse> {
                 headers: {
                     "token": token
                 }
-            });
-            const json = await res.json();
+            }).catch(() => resolve(UnsuccessfulGetResponse));
+            const json = await res?.json();
+
+            if (!res) resolve(UnsuccessfulGetResponse);
             
             resolve({
                 success: true,
@@ -80,9 +82,11 @@ export function Post(path: String, data: String): Promise<PostResponse> {
                     "token": token
                 },
                 body: JSON.stringify(data)
-            });
-            const json = await res.json();
+            }).catch(() => resolve(UnsuccessfulPostResponse));
+            const json = await res?.json();
             
+            if (!res) resolve(UnsuccessfulPostResponse);
+
             if (json === 'Error') {
                 resolve(UnsuccessfulPostResponse);
             } else {
