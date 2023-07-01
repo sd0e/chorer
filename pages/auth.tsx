@@ -9,6 +9,7 @@ import Image from 'next/image';
 import signInUser from '@/firebase/signInUser';
 import createUser from '@/firebase/createUser';
 import { useState } from 'react';
+import { getAuth } from 'firebase/auth';
 
 export default function Auth() {
   // initialise constants
