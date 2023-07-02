@@ -4,7 +4,7 @@ import firebaseApp from '../firebase/initialize';
 import dynamic from 'next/dynamic';
 
 // initalises app
-const app = firebaseApp;
+export const app = firebaseApp;
 
 function App({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />
