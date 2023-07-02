@@ -11,8 +11,7 @@ const signInUser = (email: string, password: string) => {
 				const user = result.user;
 				resolve(user);
 			}).catch((error) => {
-				const errorMessage = error.message;
-				reject(errorMessage);
+				reject(error);
 			});
 	});
 }

@@ -10,6 +10,7 @@ import signInUser from '@/firebase/signInUser';
 import createUser from '@/firebase/createUser';
 import { useState } from 'react';
 import { Get } from '@/api';
+import { AuthErrorCodes } from 'firebase/auth';
 
 export default function Auth() {
   // initialise constants
@@ -23,13 +24,17 @@ export default function Auth() {
     signInUser(email, password).then(async () => {
       localStorage.session = JSON.stringify((await Get('newsession')).response);
       router.push('/dashboard')
-    });
+    }).catch(err => window.alert(err.message));
   }
 
   const signUp = () => {
     createUser(email, password).then(async () => {
       localStorage.session = JSON.stringify((await Get('newsession')).response);
       router.push('/onboarding')
+    }).catch(err => {
+      if (err.code === AuthErrorCodes.EMAIL_EXISTS) {
+        window.alert('User with email already exists!')
+      }
     });
   }
 
