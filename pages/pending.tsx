@@ -2,7 +2,6 @@
 
 import ClientShield from '@/components/clientShield';
 import Layout from '@/components/layout';
-import { InterClass } from '@/font';
 import getSessionFeature, { Feature } from '@/scripts/getSessionFeature';
 import classes from '@/styles/Pending.module.css';
 import { useRouter } from 'next/router';
@@ -17,7 +16,7 @@ export default function Pending() {
 	// returns centered text displaying information on request
 	return (
 		<Layout title="Pending">
-			<div className={[classes.content, InterClass].join(',')}>
+			<div className={classes.content}>
 			<span>Your application to household of ID {appliedHousehold} is pending.</span>
 			</div>
 		</Layout>

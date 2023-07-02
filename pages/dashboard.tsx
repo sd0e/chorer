@@ -2,7 +2,6 @@
 
 import ClientShield from '@/components/clientShield';
 import Layout from '@/components/layout';
-import { InterClass } from '@/font';
 import classes from '@/styles/Onboarding.module.css';
 import { useRouter } from 'next/router';
 
@@ -12,7 +11,7 @@ export default function Dashboard() {
   
   return (
     <Layout title="Dashboard" leftMenu>
-      <div className={[classes.content, InterClass].join(',')}>
+      <div className={classes.content}>
         Dashboard
       </div>
     </Layout>

@@ -4,6 +4,7 @@ import styles from './layout.module.css';
 import { Inter } from 'next/font/google';
 import { motion } from 'framer-motion';
 import React from 'react';
+import { InterClass } from '@/font';
 
 // defines site name and description, exported so they can be used throughout the programme
 export const siteName = 'Chorer';
@@ -28,7 +29,7 @@ export default function Layout({ children, title, fullPage, leftMenu = false }: 
     // returns the children within the motion container, so that the animations occur, containing the subcomponent passed as a parameter
     return (
         <div
-            className={styles.wrapper}
+            className={[ styles.wrapper, InterClass ].join(' ')}
         >
             <motion.div
                 className={styles.container}
