@@ -17,8 +17,9 @@ export default function Onboarding() {
     setApplicationType(newApplicationType);
   }
 
+  // called when user clicks Apply button
   const apply = async () => {
-    await Post('/apply', householdId);
+    await Post('/apply', { id: householdId });
     router.push('/pending');
   }
 

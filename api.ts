@@ -64,7 +64,7 @@ export function Get(path: String): Promise<GetResponse> {
 }
 
 // defines method Post to allow user to write data to API
-export function Post(path: String, data: String): Promise<PostResponse> {
+export function Post(path: String, data: object): Promise<PostResponse> {
     return new Promise(async resolve => {
         path = parsePath(path);
 
@@ -79,7 +79,9 @@ export function Post(path: String, data: String): Promise<PostResponse> {
                 mode: "cors",
                 cache: "no-cache",
                 headers: {
-                    "token": token
+                    "token": token,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             }).catch(() => resolve(UnsuccessfulPostResponse));
