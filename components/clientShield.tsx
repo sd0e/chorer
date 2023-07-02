@@ -1,12 +1,10 @@
 import getSessionFeature, { Feature } from "@/scripts/getSessionFeature";
 import { getAuth } from "firebase/auth";
-import { useRouter } from "next/router";
+import { NextRouter } from "next/router";
 
-// ClientShield method: page wrapped in this method to either redirect to Auth screen if not signed in, Onboarding screen if
+// ClientShield method: page begins with this method to either redirect to Auth screen if not signed in, Onboarding screen if
 // process not complete or Pending page if waiting for approval
-export default function ClientShield({ children, redirectOnboarding = true }: { children: React.ReactNode, redirectOnboarding?: boolean }) {
-	const router = useRouter();
-
+export default function ClientShield(router: NextRouter, redirectOnboarding: boolean | null | undefined = true, redirectPending: boolean | null | undefined = true ) {
 	const currentUser = getAuth().currentUser;
 	const session = localStorage.session;
 
@@ -19,10 +17,8 @@ export default function ClientShield({ children, redirectOnboarding = true }: { 
 
 		if (!hasOnboarded && redirectOnboarding) {
 			router.push('/onboarding');
-		} else if (status === 'pending') {
+		} else if (status === 'pending' && redirectPending) {
 			router.push('/pending');
 		}
 	}
-
-	return children;
 }

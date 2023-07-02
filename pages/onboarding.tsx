@@ -1,15 +1,16 @@
 import Layout from '@/components/layout';
 import classes from '@/styles/Onboarding.module.css';
 import { useRouter } from 'next/router';
-import { getAuth } from 'firebase/auth';
+import ClientShield from '@/components/clientShield';
+import { InterClass } from '@/font';
 
 export default function Onboarding() {
   const router = useRouter();
-  const auth = getAuth();
+  ClientShield(router, false);
 
   return (
     <Layout title="Sign Up">
-      <div className={classes.content}>
+      <div className={[classes.content, InterClass].join(',')}>
         Onboarding
       </div>
     </Layout>

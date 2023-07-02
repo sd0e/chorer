@@ -12,7 +12,7 @@ export const siteDescription = 'Chore Management System';
 // defines inter font family from Google Fonts
 const inter = Inter({ subsets: ['latin'], weight: ['600', '700'] });
 
-export default function Layout({ children, title, fullPage }: { children: React.ReactNode, title?: string, fullPage?: boolean }) {
+export default function Layout({ children, title, fullPage, leftMenu = false }: { children: React.ReactNode, title?: string, fullPage?: boolean, leftMenu?: boolean }) {
     // defines animation variants to use to make the page load more smoothly
     const variants = {
         hidden: { opacity: 0, x: 0, y: 400 },
