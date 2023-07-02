@@ -9,6 +9,7 @@ import Image from 'next/image';
 import signInUser from '@/firebase/signInUser';
 import createUser from '@/firebase/createUser';
 import { useState } from 'react';
+import { Get } from '@/api';
 
 export default function Auth() {
   // initialise constants
@@ -19,11 +20,17 @@ export default function Auth() {
 
   // define sign-in and sign-out behaviour
   const signIn = () => {
-    signInUser(email, password).then(() => router.push('/dashboard'));
+    signInUser(email, password).then(async () => {
+      localStorage.session = JSON.stringify((await Get('newsession')).response);
+      router.push('/dashboard')
+    });
   }
 
   const signUp = () => {
-    createUser(email, password).then(() => router.push('/onboarding'));
+    createUser(email, password).then(async () => {
+      localStorage.session = JSON.stringify((await Get('newsession')).response);
+      router.push('/onboarding')
+    });
   }
 
   // return the JSX element, contained within the Layout container
