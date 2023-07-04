@@ -32,10 +32,10 @@ export default function Layout({ children, title, leftMenu = false }: { children
         <div
             className={classes.join(' ')}
         >
-            <div className={styles.menuContainer}>
+            { leftMenu ? <div className={styles.menuContainer}>
                 <LeftMenu />
-            </div>
-            <div className={styles.centralContainer}>
+            </div> : null }
+            <div className={leftMenu ? styles.centralContainer : styles.centralContainerLeftMenu}>
                 { /* framer motion component which uses animation when it enters */ }
                 <motion.div
                     className={leftMenu ? styles.containerInnerWithMenu : styles.containerInner}

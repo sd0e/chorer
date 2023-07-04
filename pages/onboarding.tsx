@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import ClientShield from '@/components/clientShield';
 import { TextField, ToggleButton, ToggleButtonGroup, Button, Stack} from '@mui/material';
 import { useState } from 'react';
-import { Post } from '@/api';
+import { Get, Post } from '@/api';
 
 export default function Onboarding() {
   // implement a ClientShield so that the page only loads if the user has been authorised
@@ -25,6 +25,8 @@ export default function Onboarding() {
   const apply = async () => {
     const res = await Post('/apply', { id: householdId, name: name });
     if (res.success) {
+      // updates session
+      localStorage.session = JSON.stringify((await Get('newsession')).response);
       // routes user to pending page if the API call was a success
       router.push('/pending');
     } else {
@@ -36,6 +38,8 @@ export default function Onboarding() {
   const create = async () => {
     const res = await Post('/newhousehold', { householdName: householdName, name: name });
     if (res.success) {
+      // updates session
+      localStorage.session = JSON.stringify((await Get('newsession')).response);
       // routes user to dashboard page if the API call was a success
       router.push('/dashboard');
     } else {

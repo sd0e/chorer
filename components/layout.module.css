@@ -27,9 +27,13 @@
 }
 
 .menuContainer {
-	width: 15rem;
+	width: 20rem;
 }
 
 .centralContainer {
-	width: calc(100% - 15rem);
+	width: 100%;
+}
+
+.centralContainerLeftMenu {
+	width: calc(100% - 20rem);
 }
