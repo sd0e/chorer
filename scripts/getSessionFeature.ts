@@ -6,7 +6,9 @@ export enum Feature {
 	AppliedHousehold = "appliedHousehold",
 	Email = "email",
 	WeekStartMonday = "weekStartMonday",
-	HouseholdName = "householdName"
+	HouseholdName = "householdName",
+	IsAdmin = "isAdmin",
+	IsOwner = "isOwner"
 }
 
 // returns the value of a session feature in localStorage, preventing user from having to deal with parsing issues

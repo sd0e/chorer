@@ -4,10 +4,10 @@
 }
 
 .containerInner {
-	max-width: 50rem;
+	width: calc(100% - 6rem);
 	padding: 0 3rem;
 	margin: 5rem auto 6rem;
-	height: calc(100vh - 11rem);
+	height: calc(100vh - 10rem);
 }
 
 .containerInnerWithMenu {

@@ -35,7 +35,7 @@ export default function Layout({ children, title, leftMenu = false }: { children
             { leftMenu ? <div className={styles.menuContainer}>
                 <LeftMenu />
             </div> : null }
-            <div className={leftMenu ? styles.centralContainer : styles.centralContainerLeftMenu}>
+            <div className={leftMenu ? styles.centralContainerLeftMenu : styles.centralContainer}>
                 { /* framer motion component which uses animation when it enters */ }
                 <motion.div
                     className={leftMenu ? styles.containerInnerWithMenu : styles.containerInner}
