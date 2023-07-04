@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 // import components used within the left menu
 import styles from './leftMenu.module.css';
 import logo from '@/assets/SVG/logo.svg';
@@ -7,8 +8,14 @@ import getSessionFeature, { Feature } from '@/scripts/getSessionFeature';
 
 // exports the component containing the left menu
 export default function LeftMenu() {
-    const pillImage = owner;
-    console.log(localStorage.session);
+    const isAdmin = getSessionFeature(Feature.IsAdmin);
+    const isOwner = getSessionFeature(Feature.IsOwner);
+
+    // defines whether image appearing in menu is saying that the user is an owner (takes precedence) or admin
+    let pillImage = null;
+
+    if (isOwner) pillImage = owner
+    else if (isAdmin) pillImage = admin;
     
     const name = getSessionFeature(Feature.Name);
     const email = getSessionFeature(Feature.Email);
@@ -25,7 +32,8 @@ export default function LeftMenu() {
                     <span className={styles.leftMenuName}>{name}</span>
                     <span className={styles.leftMenuEmail}>{email}</span>
                 </div>
-                <img src={pillImage.src} alt="Pill Image" className={styles.leftMenuPill} />
+                {/* Conditionally render pillImage, only if the user is an owner or admin (as defined earlier) */}
+                {pillImage ? <img src={pillImage.src} alt="Pill Image" className={styles.leftMenuPill} /> : null}
             </div>
         </div>
     </div>
