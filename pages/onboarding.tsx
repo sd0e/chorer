@@ -29,6 +29,15 @@ export default function Onboarding() {
     };
   }
 
+  const create = async () => {
+    const res = await Post('/newhousehold', { householdName: householdName, name: name });
+    if (res.success) {
+      router.push('/dashboard');
+    } else {
+      window.alert('There was an issue.');
+    };
+  }
+
   return (
     <Layout title="Sign Up">
       <div className={classes.content}>
@@ -53,7 +62,8 @@ export default function Onboarding() {
           </> : <>
             { /* page if user chooses create option */ }
             <Stack direction="column" spacing={4}>
-              <TextField label="Household Name" ></TextField>
+              <TextField label="Household Name" variant="outlined" onChange={e => setHouseholdName(e.target.value)} ></TextField>
+              <Button variant="outlined" onClick={create}>Create</Button>
             </Stack>
           </>}
         </div> : null }
