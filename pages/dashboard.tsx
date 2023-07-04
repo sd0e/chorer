@@ -2,7 +2,7 @@
 
 import ClientShield from '@/components/clientShield';
 import Layout from '@/components/layout';
-import classes from '@/styles/Onboarding.module.css';
+import styles from '@/styles/CommonPage.module.css';
 import { useRouter } from 'next/router';
 
 export default function Dashboard() {
@@ -11,7 +11,7 @@ export default function Dashboard() {
   
   return (
     <Layout title="Dashboard" leftMenu>
-      <div className={classes.content}>
+      <div className={styles.content}>
         Dashboard
       </div>
     </Layout>

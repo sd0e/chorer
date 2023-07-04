@@ -3,14 +3,33 @@
 	height: 100%;
 }
 
-.container {
+.containerInner {
 	max-width: 50rem;
 	padding: 0 3rem;
 	margin: 5rem auto 6rem;
 	height: calc(100vh - 11rem);
 }
 
+.containerInnerWithMenu {
+	width: calc(100% - 6rem);
+	padding: 3rem;
+}
+
 .main {
 	position: relative;
 	z-index: 1;
+}
+
+.includesMenu {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.menuContainer {
+	width: 15rem;
+}
+
+.centralContainer {
+	width: calc(100% - 15rem);
 }
