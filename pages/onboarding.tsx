@@ -1,3 +1,4 @@
+// import required libraries to make the page function
 import Layout from '@/components/layout';
 import classes from '@/styles/Onboarding.module.css';
 import { useRouter } from 'next/router';
@@ -7,6 +8,7 @@ import { useState } from 'react';
 import { Post } from '@/api';
 
 export default function Onboarding() {
+  // implement a ClientShield so that the page only loads if the user has been authorised
   const router = useRouter();
   ClientShield(router, false);
 
@@ -19,25 +21,29 @@ export default function Onboarding() {
     setApplicationType(newApplicationType);
   }
 
-  // called when user clicks Apply button
+  // called when user clicks Apply button, adds information to database to say that they have applied to the household
   const apply = async () => {
     const res = await Post('/apply', { id: householdId, name: name });
     if (res.success) {
+      // routes user to pending page if the API call was a success
       router.push('/pending');
     } else {
       window.alert('There was an issue.');
     };
   }
 
+  // called when user clicks Create button, creates a household and assigns that user to the household
   const create = async () => {
     const res = await Post('/newhousehold', { householdName: householdName, name: name });
     if (res.success) {
+      // routes user to dashboard page if the API call was a success
       router.push('/dashboard');
     } else {
       window.alert('There was an issue.');
     };
   }
 
+  // return a JSX component to be served on the /onboarding route
   return (
     <Layout title="Sign Up">
       <div className={classes.content}>
