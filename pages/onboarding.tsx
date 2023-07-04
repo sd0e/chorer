@@ -12,6 +12,8 @@ export default function Onboarding() {
 
   const [applicationType, setApplicationType] = useState();
   const [householdId, setHouseholdId] = useState('');
+  const [name, setName] = useState('');
+  const [householdName, setHouseholdName] = useState('');
 
   const updateApplicationType = (newApplicationType: any) => {
     setApplicationType(newApplicationType);
@@ -19,14 +21,19 @@ export default function Onboarding() {
 
   // called when user clicks Apply button
   const apply = async () => {
-    await Post('/apply', { id: householdId });
-    router.push('/pending');
+    const res = await Post('/apply', { id: householdId, name: name });
+    if (res.success) {
+      router.push('/pending');
+    } else {
+      window.alert('There was an issue.');
+    };
   }
 
   return (
     <Layout title="Sign Up">
       <div className={classes.content}>
         <h2 className={classes.headTag}>Onboarding</h2>
+        <TextField label="Name" variant="outlined" onChange={e => setName(e.target.value)} style={{ marginBottom: '3rem' }} />
         <p className={classes.subheading}>Would you like to join or create a household?</p>
         <ToggleButtonGroup value={applicationType} onChange={(_, newApplicationType) => updateApplicationType(newApplicationType)} exclusive={true}>
           <ToggleButton value="join" key="join">
@@ -45,6 +52,9 @@ export default function Onboarding() {
             </Stack>
           </> : <>
             { /* page if user chooses create option */ }
+            <Stack direction="column" spacing={4}>
+              <TextField label="Household Name" ></TextField>
+            </Stack>
           </>}
         </div> : null }
       </div>

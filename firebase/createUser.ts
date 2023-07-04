@@ -1,4 +1,5 @@
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { Post } from "@/api";
 
 const auth = getAuth();
 
@@ -7,7 +8,16 @@ const createUser = (email: string, password: string) => {
 		createUserWithEmailAndPassword(auth, email, password)
 			.then((result) => {
 				const user = result.user;
-				resolve(user);
+				
+				Post('/createuser', { email: email })
+					.then(res => {
+						if (res.success) {
+							resolve(user);
+						} else {
+							reject();
+						}
+					})
+					.catch(() => reject())
 			}).catch((error) => {
 				reject(error);
 			});
