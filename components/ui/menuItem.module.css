@@ -1,0 +1,35 @@
+.menuItemLink {
+    width: 100%;
+    text-decoration: none;
+}
+
+.menuItem {
+    color: #f2f2f2;
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.menuItemLeft {
+    display: flex;
+    align-items: center;
+}
+
+.menuItemIcon {
+    margin-right: 1rem;
+    width: 3rem;
+}
+
+.menuItemText {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: black;
+}
+
+.menuItemSelected {
+    height: 100%;
+    width: 0.25rem;
+    border-radius: 0.125rem;
+}
