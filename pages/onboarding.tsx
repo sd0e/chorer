@@ -23,6 +23,11 @@ export default function Onboarding() {
 
   // called when user clicks Apply button, adds information to database to say that they have applied to the household
   const apply = async () => {
+    if (householdId.length !== 8) {
+      window.alert('Check that your ID is of the correct format');
+      return;
+    }
+
     const res = await Post('/apply', { id: householdId, name: name });
     if (res.success) {
       // updates session
