@@ -6,14 +6,14 @@ import styles from '@/styles/CommonPage.module.css';
 import { useRouter } from 'next/router';
 
 // returns the page component to be served over relevant route
-export default function Dashboard() {
+export default function AdminConsole() {
   const router = useRouter();
   ClientShield(router);
   
   return (
-    <Layout title="Dashboard" leftMenu>
+    <Layout title="Admin Console" leftMenu>
       <div className={styles.content}>
-        Dashboard
+        Admin Console
       </div>
     </Layout>
   )
