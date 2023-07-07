@@ -18,7 +18,9 @@ export default function Users() {
     ClientShield(router).then(() => {
       // code executes once it has been confirmed that user is signed in
       Get('/members').then(res => {
+        console.log(res);
         if (res.success) setUsers(res.response);
+        console.log(users);
       })
     });
   }, []);

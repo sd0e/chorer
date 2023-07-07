@@ -38,28 +38,30 @@ export function Get(path: String): Promise<GetResponse> {
         path = parsePath(path);
 
         const auth = getAuth();
-        if (!auth.currentUser) {
-            resolve(UnsuccessfulGetResponse);
-        } else {
-            const token = await auth.currentUser.getIdToken();
+        auth.onAuthStateChanged(async user => {
+            if (!user) {
+                resolve(UnsuccessfulGetResponse);
+            } else {
+                const token = await user.getIdToken();
 
-            const res = await fetch(`${apiUrl}/${path}`, {
-                method: "GET",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "token": token
-                }
-            }).catch(() => resolve(UnsuccessfulGetResponse));
-            const json = await res?.json();
+                const res = await fetch(`${apiUrl}/${path}`, {
+                    method: "GET",
+                    mode: "cors",
+                    cache: "no-cache",
+                    headers: {
+                        "token": token
+                    }
+                }).catch(() => resolve(UnsuccessfulGetResponse));
+                const json = await res?.json();
 
-            if (!res) resolve(UnsuccessfulGetResponse);
-            
-            resolve({
-                success: true,
-                response: json
-            });
-        }
+                if (!res) resolve(UnsuccessfulGetResponse);
+                
+                resolve({
+                    success: true,
+                    response: json
+                });
+            }
+        })
     });
 }
 
@@ -69,33 +71,35 @@ export function Post(path: String, data: object): Promise<PostResponse> {
         path = parsePath(path);
 
         const auth = getAuth();
-        if (!auth.currentUser) {
-            resolve(UnsuccessfulPostResponse);
-        } else {
-            const token = await auth.currentUser.getIdToken();
-
-            const res = await fetch(`${apiUrl}/${path}`, {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "token": token,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            }).catch(() => resolve(UnsuccessfulPostResponse));
-            const json = await res?.json();
-            
-            if (!res) resolve(UnsuccessfulPostResponse);
-
-            if (json === 'Error') {
+        auth.onAuthStateChanged(async user => {
+            if (!user) {
                 resolve(UnsuccessfulPostResponse);
             } else {
-                resolve({
-                    success: true
-                });
+                const token = await user.getIdToken();
+
+                const res = await fetch(`${apiUrl}/${path}`, {
+                    method: "POST",
+                    mode: "cors",
+                    cache: "no-cache",
+                    headers: {
+                        "token": token,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }).catch(() => resolve(UnsuccessfulPostResponse));
+                const json = await res?.json();
+                
+                if (!res) resolve(UnsuccessfulPostResponse);
+
+                if (json === 'Error') {
+                    resolve(UnsuccessfulPostResponse);
+                } else {
+                    resolve({
+                        success: true
+                    });
+                }
             }
-        }
+        });
     });
 }
