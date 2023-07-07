@@ -15,7 +15,7 @@ function parsePath(path: String) {
 // defines format of response from a Get request
 interface GetResponse {
     success: boolean,
-    response: object | null
+    response: any | null
 }
 
 const UnsuccessfulGetResponse: GetResponse = {
