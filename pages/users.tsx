@@ -36,7 +36,7 @@ export default function Users() {
   }, []);
 
   const ban = (uid: string) => {
-    window.alert(uid);
+    Post('/ban', { uid: uid }).then(() => window.location.reload());
   }
 
   const approve = (uid: string) => {

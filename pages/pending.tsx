@@ -17,6 +17,7 @@ export default function Pending() {
 	useEffect(() => {
 		Get('/newsession').then(sessionInfo => {
 			if (sessionInfo && sessionInfo.response && sessionInfo.response.status && sessionInfo.response.status === 'accepted') router.push('dashboard');
+			if (sessionInfo && sessionInfo.response && sessionInfo.response.status && sessionInfo.response.status === 'none') router.push('onboarding');
 			localStorage.session = JSON.stringify(sessionInfo.response);
 		});
 	}, []);
