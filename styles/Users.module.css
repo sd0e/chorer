@@ -1,0 +1,34 @@
+.userOuter {
+	border: 2px solid rgba(0, 0, 0, 0.1);
+	padding: 2rem;
+	border-radius: 0.5rem;
+	display: flex;
+	width: calc(100% - 4rem);
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.userTitle {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.userName {
+	color: #111111;
+	font-size: 1.2rem;
+}
+
+.userAuthority {
+	height: 1.5rem;
+	margin-left: 1rem;
+}
+
+.userEmail {
+	font-size: 0.9rem;
+	color: #111111;
+	opacity: 0.6;
+	display: block;
+	margin-top: 0.75rem;
+}

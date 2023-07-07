@@ -1,0 +1,10 @@
+.buttonInner {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.buttonText {
+	display: block;
+	margin-left: 1rem;
+}
