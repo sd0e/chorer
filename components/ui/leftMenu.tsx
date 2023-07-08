@@ -9,6 +9,7 @@ import { Stack } from '@mui/material';
 import MenuItem from './menuItem';
 import { AccountCircleOutlined, AddTaskOutlined, AdminPanelSettingsOutlined, AnalyticsOutlined, DashboardOutlined, SavingsOutlined, SettingsOutlined } from '@mui/icons-material';
 import { useRouter } from 'next/router';
+import { InterClass } from '@/font';
 
 // exports the component containing the left menu
 export default function LeftMenu() {
@@ -28,7 +29,7 @@ export default function LeftMenu() {
     const name = getSessionFeature(Feature.Name);
     const email = getSessionFeature(Feature.Email);
 
-    return <div className={styles.leftMenu}>
+    return <div className={[styles.leftMenu, InterClass].join(' ')}>
         <div>
             { /* content in here displayed at the top of the flex column */ }
             <Stack direction="column" spacing={1.5} alignItems="flex-start">

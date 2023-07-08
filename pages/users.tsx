@@ -23,6 +23,7 @@ export default function Users() {
 
   const hasPrivs = hasPrivileges();
 
+  // loads the information on users from the server
   const [users, setUsers] = useState<any>('Loading');
   console.log(users);
 
@@ -52,6 +53,7 @@ export default function Users() {
       <div className={styles.content}>
         <span>Invite users using the following ID: {getSessionFeature(Feature.AppliedHousehold)}</span>
         <Stack direction="column" spacing={2}>
+          { /* if the information is still loading from the server, render a loading message */ }
           {users === 'Loading' ? <span>Loading</span> : users.map((user: any) => {
             // defines whether image appearing in user infoormation is saying that the user is an owner (takes precedence) or admin
             let pillImage = null;
@@ -66,6 +68,7 @@ export default function Users() {
                 </div>
                 <span className={userStyles.userEmail}>{user.email}</span>
               </div>
+              { /* only renders user buttons if the signed-in user is an admin or owner, and the user being rendered is not the owner of the household */ }
               { hasPrivs && !user.isOwner ? <Stack direction="row" spacing={4}>
                 { user.status === 'accepted' ? <>
                   <ActionButton Icon={GavelOutlined} onClick={() => ban(user._id)} color={ActionButtonColors.Error}>Ban</ActionButton>
