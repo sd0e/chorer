@@ -45,6 +45,10 @@ export default function Points() {
     const userId = currUser;
     const userBalance = data.find((val: any) => val.userId === currUser).balance;
     const pointsToDeduct = Number(window.prompt('Enter number of points to deduct'));
+    if (!pointsToDeduct) {
+      window.alert('Transaction cancelled');
+      return;
+    } 
     const newBalance = userBalance - pointsToDeduct;
     if (newBalance < 0) {
       window.alert('Too many points deducted');
@@ -56,15 +60,19 @@ export default function Points() {
   return (
     <Layout title="Points" leftMenu>
       <div className={styles.content}>
-        {!data ? 'Loading' : hasPrivs ? <div className={pointStyles.points}>
-          <Select value={currUser} label="User" onChange={e => setCurrUser(e.target.value)}>
-            {data.map((u: any) => <MenuItem value={u.userId} key={u.userId}>{ u.name }</MenuItem>)}
-          </Select>
-          <p className={pointStyles.numberPoints}>{data.find((val: any) => val.userId === currUser).balance}</p>
-          <ActionButton color={ActionButtonColors.Error} Icon={RemoveCircleOutlineOutlined} onClick={deduct}>Deduct</ActionButton>
-        </div> : <>
-          No Privs
-        </>}
+        {!data ? 'Loading' : <div className={pointStyles.points}>
+          {hasPrivs ? <>
+            <Select value={currUser} label="User" onChange={e => setCurrUser(e.target.value)}>
+              {data.map((u: any) => <MenuItem value={u.userId} key={u.userId}>{ u.name }</MenuItem>)}
+            </Select>
+            <p className={pointStyles.numberPoints}>{data.find((val: any) => val.userId === currUser).balance}</p>
+            <ActionButton color={ActionButtonColors.Error} Icon={RemoveCircleOutlineOutlined} onClick={deduct}>Deduct</ActionButton>
+            </>
+            : <>
+              <span className={pointStyles.pointTitle}>Balance</span>
+              <p className={pointStyles.numberPoints}>{data.balance}</p>
+            </> }
+        </div>}
       </div>
     </Layout>
   )
