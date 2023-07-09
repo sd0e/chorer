@@ -13,7 +13,7 @@ import owner from '@/assets/SVG/owner.svg';
 import { Stack } from '@mui/material';
 import hasPrivileges from '@/scripts/hasPrivileges';
 import ActionButton, { ActionButtonColors } from '@/components/ui/actionButton';
-import { CancelOutlined, CheckCircleOutlined, GavelOutlined } from '@mui/icons-material';
+import { AdminPanelSettingsOutlined, CancelOutlined, CheckCircleOutlined, GavelOutlined } from '@mui/icons-material';
 import getSessionFeature, { Feature } from '@/scripts/getSessionFeature';
 
 // returns the page component to be served over relevant route
@@ -25,7 +25,6 @@ export default function Users() {
 
   // loads the information on users from the server
   const [users, setUsers] = useState<any>('Loading');
-  console.log(users);
 
   useEffect(() => {
     ClientShield(router).then(() => {
@@ -46,6 +45,10 @@ export default function Users() {
 
   const reject = (uid: string) => {
     Post('/reject', { uid: uid }).then(() => window.location.reload());
+  }
+
+  const promote = (uid: string) => {
+    Post('/promote', { uid: uid }).then(() => window.location.reload());
   }
   
   return (
@@ -72,6 +75,7 @@ export default function Users() {
               { hasPrivs && !user.isOwner ? <Stack direction="row" spacing={4}>
                 { user.status === 'accepted' ? <>
                   <ActionButton Icon={GavelOutlined} onClick={() => ban(user._id)} color={ActionButtonColors.Error}>Ban</ActionButton>
+                  {!user.isAdmin && <ActionButton Icon={AdminPanelSettingsOutlined} onClick={() => promote(user._id)} color={ActionButtonColors.Success}>Promote</ActionButton>}
                 </> : <>
                   <ActionButton Icon={CheckCircleOutlined} onClick={() => approve(user._id)} color={ActionButtonColors.Success}>Approve</ActionButton>
                   <ActionButton Icon={CancelOutlined} onClick={() => reject(user._id)} color={ActionButtonColors.Error}>Reject</ActionButton>

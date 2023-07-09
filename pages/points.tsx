@@ -17,6 +17,7 @@ export default function Points() {
   const router = useRouter();
   ClientShield(router);
 
+  // define hooks for the data and the selected user
   const hasPrivs = hasPrivileges();
   const [data, setData] = useState<any>(null);
   const [currUser, setCurrUser] = useState<null | string>(null);
