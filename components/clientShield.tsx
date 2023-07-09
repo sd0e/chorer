@@ -15,7 +15,6 @@ export default async function ClientShield(router: NextRouter, redirectOnboardin
 		} else {
 			const hasOnboarded = getSessionFeature(Feature.HasOnboarded);
 			const status = getSessionFeature(Feature.Status);
-			console.log(hasOnboarded);
 
 			if (!hasOnboarded && redirectOnboarding) {
 				router.push('/onboarding');
