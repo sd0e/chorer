@@ -1,0 +1,30 @@
+.statDisplayOuter {
+	padding: 1.5rem;
+	width: calc(100% - 3rem);
+	border-radius: 0.5rem;
+	border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.title {
+	display: block;
+	margin-bottom: 1.5rem;
+	opacity: 0.6;
+	font-weight: 600;
+}
+
+.statOuter {
+	width: 7.5rem;
+}
+
+.statAmount {
+	display: block;
+	font-weight: 600;
+	font-size: 3rem;
+	line-height: 3rem;
+	margin-bottom: 0.7rem;
+}
+
+.statName {
+	font-weight: 600;
+	opacity: 0.6;
+}

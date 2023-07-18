@@ -32,3 +32,11 @@
 	display: block;
 	margin-top: 0.75rem;
 }
+
+.userPending {
+	display: block;
+	font-size: 0.9rem;
+	opacity: 0.6;
+	font-weight: 600;
+	margin-bottom: 1rem;
+}

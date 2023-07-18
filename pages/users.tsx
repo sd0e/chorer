@@ -65,6 +65,7 @@ export default function Users() {
             else if (user.isAdmin) pillImage = admin;
             return <div className={userStyles.userOuter} key={user.name}>
               <div>
+                { user.status !== 'accepted' ? <span className={userStyles.userPending}>Pending</span> : null }
                 <div className={userStyles.userTitle}>
                   <span className={userStyles.userName}>{ user.name }</span>
                   { pillImage ? <img src={pillImage.src} alt={user.isOwner ? 'Owner' : 'Admin'} className={userStyles.userAuthority} /> : null }
