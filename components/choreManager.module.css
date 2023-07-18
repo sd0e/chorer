@@ -1,0 +1,12 @@
+.choreName {
+	width: 100%;
+}
+
+.colorInput {
+	height: 3.5rem;
+	width: 3.6rem;
+	padding: 0.5rem;
+	border-radius: 0.3rem;
+	background-color: white;
+	border: 1px solid rgba(0, 0, 0, 0.25);
+}

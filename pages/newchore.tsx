@@ -1,5 +1,6 @@
 // import necessary libraries
 
+import ChoreManager from '@/components/choreManager';
 import ClientShield from '@/components/clientShield';
 import Layout from '@/components/layout';
 import styles from '@/styles/CommonPage.module.css';
@@ -13,7 +14,7 @@ export default function NewChore() {
   return (
     <Layout title="New Chore" leftMenu>
       <div className={styles.content}>
-        New Chore
+        <ChoreManager />
       </div>
     </Layout>
   )
