@@ -31,9 +31,11 @@ export default function ChoreManager({ info }: { info?: { name: string, color: h
 	});
 
 	return <ThemeProvider theme={theme}>
-		<Stack direction="row" spacing={2}>
-			<TextField value={name} onChange={e => setName(e.target.value)} inputProps={{ style: { fontWeight: 600 } }} label="Chore Name" className={styles.choreName} />
-			<input type="color" className={styles.colorInput} value={color} onChange={e => newColor(e.target.value)} />
+		<Stack direction="column" spacing={4}>
+			<Stack direction="row" spacing={2}>
+				<TextField value={name} onChange={e => setName(e.target.value)} inputProps={{ style: { fontWeight: 600 } }} label="Chore Name" className={styles.choreName} />
+				<input type="color" className={styles.colorInput} value={color} onChange={e => newColor(e.target.value)} />
+			</Stack>
 		</Stack>
 	</ThemeProvider>
 }
