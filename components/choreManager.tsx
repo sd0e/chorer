@@ -5,7 +5,7 @@ import { createTheme, Stack, TextField, ThemeProvider, Backdrop, Paper, Select, 
 import { useEffect, useState } from 'react';
 import styles from './choreManager.module.css';
 import ActionButton, { ActionButtonColors } from './ui/actionButton';
-import { AddOutlined, DoneOutline } from '@mui/icons-material';
+import { AddOutlined, CancelOutlined, Done } from '@mui/icons-material';
 import { Get } from '@/api';
 
 export type hex = `#${string}`;
@@ -15,7 +15,7 @@ export default function ChoreManager({ info }: { info?: { name: string, color: h
 	// define component hooks to temporarily store data
 	const [name, setName] = useState<string>(info ? info.name : '');
 	const [color, setColor] = useState<hex>(info ? info.color : '#000000');
-	const [userList, setUserList] = useState<string | null>(info ? JSON.stringify(info.userList) : null);
+	const [userList, setUserList] = useState<string>(info ? JSON.stringify(info.userList) : '[]');
 
 	const newColor = (color: any) => {
 		setColor(color);
@@ -42,27 +42,46 @@ export default function ChoreManager({ info }: { info?: { name: string, color: h
 		setUserPopupShowing(true);
 	}
 
+	// get members list and populate array
 	useEffect(() => {
 		Get(`/fullmembers`).then(newData => {
 			setData(newData.response);
 		})
 	}, []);
 
+	// adds a user from the popup to the array of existing users
 	const addUser = () => {
 		const userId = currUser;
+
+		let tempUserList = JSON.parse(userList);
+		
+		data.forEach((userInfo: any) => {
+			console.log(userId, userInfo._id);
+			if (userId === userInfo._id) {
+				tempUserList.push(userInfo);
+			}
+		});
+
+		setUserList(JSON.stringify(tempUserList));
+
+		setUserPopupShowing(false);
 	}
+
+	console.log(userList);
 
 	return <ThemeProvider theme={theme}>
 		<Backdrop
 			open={userPopupShowing}
-			onClick={() => setUserPopupShowing(false)}
 			sx={{ zIndex: 1, color: 'white' }}
 		>
 			<Paper sx={{ backgroundColor: '#ffffff', padding: '32px' }}>
-				{ data ? <Select value={currUser} label="User" onChange={e => setCurrUser(e.target.value)}>
-					{data.map((u: any) => <MenuItem value={u._id} key={u._id}>{ u.name }</MenuItem>)}
-				</Select> : null }
-				<ActionButton color={ActionButtonColors.Success} Icon={DoneOutline} onClick={addUser}>Add</ActionButton>
+				<Stack direction="column" spacing={4}>
+					{ data ? <Select value={currUser} label="User" onChange={e => setCurrUser(e.target.value)}>
+						{data.map((u: any) => <MenuItem value={u._id} key={u._id}>{ u.name }</MenuItem>)}
+					</Select> : null }
+					<ActionButton color={ActionButtonColors.Success} Icon={Done} onClick={addUser}>Add</ActionButton>
+					<ActionButton color={ActionButtonColors.Error} Icon={CancelOutlined} onClick={() => setUserPopupShowing(false)}>Cancel</ActionButton>
+				</Stack>
 			</Paper>
 		</Backdrop>
 		<Stack direction="column" spacing={4}>
