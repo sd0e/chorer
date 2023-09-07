@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import styles from './choreManager.module.css';
 import ActionButton, { ActionButtonColors } from './ui/actionButton';
 import { AddOutlined, CancelOutlined, Done } from '@mui/icons-material';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Get } from '@/api';
+import CommonPaper from './ui/commonPaper';
 
 export type hex = `#${string}`;
 
@@ -91,31 +91,21 @@ export default function ChoreManager({ info }: { info?: { name: string, color: h
 				<input type="color" className={styles.colorInput} value={color} onChange={e => newColor(e.target.value)} />
 			</Stack>
 			<div>
-				<h3>Assignees</h3>
-				<ActionButton Icon={AddOutlined} color={ActionButtonColors.Success} onClick={showNewUserPopup}>New</ActionButton>
-				{ userList !== '[]' ? <DragDropContext onDragEnd={(result, provided) => {
-					console.log(result, provided);
-				}}>
-					<Droppable droppableId="droppable">
-						{(provided, snapshot) => {
-							return <div
-								ref={provided.innerRef}
-								style={{ backgroundColor: snapshot.isDraggingOver ? 'red' : 'green' }}
-								{...provided.droppableProps}
-							>
-								{JSON.parse(userList).map((user: any, index: any) => {
-									return <Draggable draggableId={user._id} index={index} key={user._id}>
-										{(provided, snapshot) => (
-											<div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-												<ListItem>{user.email}</ListItem>hirjiogern
-											</div>
-										)}
-									</Draggable>
-								})}
-							</div>
-						}}
-					</Droppable>
-				</DragDropContext> : null }
+				<Stack direction="column" spacing={4} alignItems="flex-start" sx={{ width: '100%' }}>
+					<div>
+						<h3>Assignees</h3>
+						<ActionButton Icon={AddOutlined} color={ActionButtonColors.Success} onClick={showNewUserPopup}>New</ActionButton>
+					</div>
+					{ userList !== '[]' ? <Stack direction="column" spacing={2} sx={{ width: '100%' }}>{JSON.parse(userList).map((user: any) => {
+						return <CommonPaper>
+							<Stack direction="row" spacing={2} alignItems="center">
+								<span><strong>{user.name}</strong> has this chore for </span>
+								<TextField value="1" sx={{ width: '64px' }} />
+								<span>cycles</span>
+							</Stack>
+						</CommonPaper>
+					})}</Stack> : null }
+				</Stack>
 			</div>
 		</Stack>
 	</ThemeProvider>
