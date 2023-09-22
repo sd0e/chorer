@@ -88,7 +88,7 @@ export default function ChoreManager({ info }: { info?:
 	const addUser = () => {
 		const userId = currUser;
 
-		let tempUserList = JSON.parse(userList);
+		let tempUserList = JSON.parse(thisInfo)["userList"];
 		
 		data.forEach((userInfo: any) => {
 			console.log(userId, userInfo._id);
