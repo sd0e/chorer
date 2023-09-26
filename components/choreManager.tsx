@@ -6,13 +6,14 @@ import { useEffect, useState } from 'react';
 import styles from './choreManager.module.css';
 import ActionButton, { ActionButtonColors } from './ui/actionButton';
 import { AddOutlined, CancelOutlined, Done } from '@mui/icons-material';
-import { Get } from '@/api';
+import { Get, Post } from '@/api';
 import CommonPaper from './ui/commonPaper';
+import { useRouter } from 'next/router';
 
 export type hex = `#${string}`;
 
 // export the component to be used in other files
-export default function ChoreManager({ info, isNew }: { info?:
+export default function ChoreManager({ info, isNew, id }: { info?:
 	{
 		name: string,
 		color: hex,
@@ -24,8 +25,11 @@ export default function ChoreManager({ info, isNew }: { info?:
 		rewardPoints: number,
 		overdueDailyRewardDecrease: number
 	},
-	isNew: boolean
+	isNew: boolean,
+	id?: string
 | undefined }) {
+	const router = useRouter();
+
 	// define component hooks to temporarily store data
 	const [thisInfo, setThisInfo] = useState<string>(() => {
 		let tempInfo = info ? info : {
@@ -166,6 +170,15 @@ export default function ChoreManager({ info, isNew }: { info?:
 			window.alert('There must be users allocated to the chore.');
 		} else {
 			// can be submitted
+			if (isNew) {
+				Post('/newchore', { info: info }).then(() => {
+					router.push('/admin');
+				});
+			} else {
+				Post('/updatechore', { info: info, id: id }).then(() => {
+					router.push('/admin');
+				});
+			}
 		}
 	}
 
