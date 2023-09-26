@@ -1,7 +1,7 @@
 // used in both the new chore and chore management pages to create and edit chores
 
 // import necessary libraries
-import { createTheme, Stack, TextField, ThemeProvider, Backdrop, Paper, Select, MenuItem, ListItem, IconButton } from '@mui/material';
+import { createTheme, Stack, TextField, ThemeProvider, Backdrop, Paper, Select, MenuItem, ListItem, IconButton, Grid, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import styles from './choreManager.module.css';
 import ActionButton, { ActionButtonColors } from './ui/actionButton';
@@ -12,7 +12,7 @@ import CommonPaper from './ui/commonPaper';
 export type hex = `#${string}`;
 
 // export the component to be used in other files
-export default function ChoreManager({ info }: { info?:
+export default function ChoreManager({ info, isNew }: { info?:
 	{
 		name: string,
 		color: hex,
@@ -23,7 +23,8 @@ export default function ChoreManager({ info }: { info?:
 		completeAction: string,
 		rewardPoints: number,
 		overdueDailyRewardDecrease: number
-	}
+	},
+	isNew: boolean
 | undefined }) {
 	// define component hooks to temporarily store data
 	const [thisInfo, setThisInfo] = useState<string>(() => {
@@ -42,8 +43,10 @@ export default function ChoreManager({ info }: { info?:
 		return JSON.stringify(tempInfo);
 	});
 
+	// code to fetch a property from the store
 	const getProp = (propName: string) => JSON.parse(thisInfo)[propName];
 
+	// code to set a property in the store
 	const updateProp = (propName: string, newValue: any) => {
 		setThisInfo(thisInfo => {
 			let tempInfo = JSON.parse(thisInfo);
@@ -104,6 +107,68 @@ export default function ChoreManager({ info }: { info?:
 		setUserPopupShowing(false);
 	}
 
+	const textFields = [
+		{
+			"title": "Number of times to repeat",
+			"propKey": "repeatTimes",
+			"onChange": (e: any) => updateProp("repeatTimes", e.target.value),
+			"type": "number"
+		},
+		{
+			"title": "How many days between each repeat",
+			"propKey": "repeatFrequency",
+			"onChange": (e: any) => updateProp("repeatFrequency", e.target.value * 86400000),
+			"type": "number"
+		},
+		{
+			"title": "Hours before due time to send reminder",
+			"propKey": "notificationTimeBeforeOverdue",
+			"onChange": (e: any) => updateProp("notificationTimeBeforeOverdue", e.target.value),
+			"type": "number"
+		},
+		{
+			"title": "Complete webhook URL",
+			"propKey": "completeAction",
+			"onChange": (e: any) => updateProp("completeAction", e.target.value),
+			"type": "text"
+		},
+		{
+			"title": "Reward points",
+			"propKey": "rewardPoints",
+			"onChange": (e: any) => updateProp("rewardPoints", e.target.value),
+			"type": "number"
+		},
+		{
+			"title": "Daily overdue reward point decrease",
+			"propKey": "overdueDailyRewardDecrease",
+			"onChange": (e: any) => updateProp("overdueDailyRewardDecrease", e.target.value),
+			"type": "number"
+		}
+	]
+
+	const save = () => {
+		const info: {
+			name: string,
+			color: hex,
+			userList: object,
+			repeatTimes: number,
+			repeatFrequency: number,
+			notificationTimeBeforeOverdue: number,
+			completeAction: string,
+			rewardPoints: number,
+			overdueDailyRewardDecrease: number
+		} = JSON.parse(thisInfo);
+		if (info.repeatTimes < 1 || info.repeatFrequency < 86400000 || info.notificationTimeBeforeOverdue < 1 || info.notificationTimeBeforeOverdue < 1 || info.rewardPoints < 0 || info.overdueDailyRewardDecrease < 0) {
+			window.alert('Values must be positive integers.');
+		} else if (info.name === "") {
+			window.alert('The chore must have a name.');
+		} else if ((info.userList as any).length === 0) {
+			window.alert('There must be users allocated to the chore.');
+		} else {
+			// can be submitted
+		}
+	}
+
 	return <ThemeProvider theme={theme}>
 		<Backdrop
 			open={userPopupShowing}
@@ -161,8 +226,23 @@ export default function ChoreManager({ info }: { info?:
 							</Stack>
 						</CommonPaper>
 					})}</Stack> : null }
+					<Grid container width="100%">
+						{textFields.map(textField => {
+							return <Grid item xs={12} key={textField.title}>
+								<Grid container width="100%" sx={{ marginBottom: '0.5rem' }}>
+									<Grid item xs={6}>
+										<span>{textField.title}</span>
+									</Grid>
+									<Grid item xs={6}>
+										<TextField type={textField.type} value={textField.propKey === "repeatFrequency" ? JSON.parse(thisInfo)[textField.propKey] / 86400000 : JSON.parse(thisInfo)[textField.propKey]} onChange={e => textField.onChange(e)} fullWidth />
+									</Grid>
+								</Grid>
+							</Grid>
+						})}
+					</Grid>
 				</Stack>
 			</div>
+			<Button color="primary" variant="outlined" sx={{ width: 'min-content' }} onClick={save}>Save</Button>
 		</Stack>
 	</ThemeProvider>
 }

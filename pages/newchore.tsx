@@ -14,7 +14,7 @@ export default function NewChore() {
   return (
     <Layout title="New Chore" leftMenu>
       <div className={styles.content}>
-        <ChoreManager />
+        <ChoreManager isNew={true} />
       </div>
     </Layout>
   )
