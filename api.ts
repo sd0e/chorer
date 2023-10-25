@@ -25,11 +25,13 @@ const UnsuccessfulGetResponse: GetResponse = {
 
 // defines format of response from a Post request
 interface PostResponse {
-    success: boolean
+    success: boolean,
+    response: any | null
 }
 
 const UnsuccessfulPostResponse: PostResponse = {
-    success: false
+    success: false,
+    response: null
 }
 
 // defines method Get to allow user to fetch data from API
@@ -96,7 +98,8 @@ export function Post(path: String, data: object): Promise<PostResponse> {
                     resolve(UnsuccessfulPostResponse);
                 } else {
                     resolve({
-                        success: true
+                        success: true,
+                        response: json
                     });
                 }
             }

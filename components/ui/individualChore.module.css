@@ -1,0 +1,16 @@
+.chore {
+	border-radius: 0.5rem;
+	padding: 1rem;
+	width: calc(100% - 2rem);
+	border-width: 2px;
+	border-style: solid;
+}
+
+.name {
+	font-size: 1.2rem;
+}
+
+.timer {
+	font-size: 0.9rem;
+	opacity: 0.7;
+}

@@ -174,11 +174,12 @@ export default function ChoreManager({ info, isNew, id, onSave }: { info?:
 		} else {
 			// can be submitted
 			if (isNew) {
-				Post('/newchore', { info: info }).then(() => {
+				Post('/newchore', { info: info }).then((res) => {
+					const newId = res.response;
 					if (onSave) {
 						onSave();
 					} else {
-						router.push('/admin');
+						router.push(`/chore/${newId}`);
 					}
 				});
 			} else {
@@ -186,11 +187,17 @@ export default function ChoreManager({ info, isNew, id, onSave }: { info?:
 					if (onSave) {
 						onSave();
 					} else {
-						router.push('/admin');
+						router.push(`/chore/${id}`);
 					}
 				});
 			}
 		}
+	}
+
+	const deleteChore = () => {
+		Post('/deletechore', { id: id }).then(() => {
+			router.push('/admin');
+		})
 	}
 
 	return <div className={InterClass}>
@@ -268,6 +275,7 @@ export default function ChoreManager({ info, isNew, id, onSave }: { info?:
 					</Stack>
 				</div>
 				<Button color="primary" variant="outlined" sx={{ width: 'min-content' }} onClick={save}>Save</Button>
+				{ !isNew ? <Button color="error" variant="outlined" sx={{ width: 'min-content' }} onClick={deleteChore}>Delete</Button> : null }
 			</Stack>
 		</ThemeProvider>
 	</div>
