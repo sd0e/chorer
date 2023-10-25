@@ -2,7 +2,7 @@
 import Head from 'next/head';
 import styles from './layout.module.css';
 import { motion } from 'framer-motion';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { InterClass } from '@/font';
 import LeftMenu from './ui/leftMenu';
 import { SwipeableDrawer } from '@mui/material';
@@ -11,6 +11,10 @@ import MobileHeader from './ui/mobileHeader';
 // defines site name and description, exported so they can be used throughout the programme
 export const siteName = 'Chorer';
 export const siteDescription = 'Chore Management System';
+
+// set up notifications
+import * as PusherPushNotifications from "@pusher/push-notifications-web";
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 export default function Layout({ children, title, leftMenu = false }: { children: React.ReactNode, title?: string, leftMenu?: boolean }) {
     // defines animation variants to use to make the page load more smoothly
@@ -33,6 +37,23 @@ export default function Layout({ children, title, leftMenu = false }: { children
 		if (window.innerWidth >= minWidth && isMobile) setIsMobile(false);
 		else if (window.innerWidth < minWidth && !isMobile) setIsMobile(true);
 	}
+
+    // register notification provider, attaching the user ID to registration
+    useEffect(() => {
+        const auth = getAuth();
+
+        onAuthStateChanged(auth, user => {
+            const userId = user?.uid;
+
+            const beamsClient = new PusherPushNotifications.Client({
+                instanceId: '1a4f7c42-a3f3-4b41-b6bb-f510ed9f34e2',
+            });
+            
+            beamsClient.start()
+                .then(() => beamsClient.addDeviceInterest(userId ? userId : 'unauthorised'))
+                .catch(console.error);
+        });
+    }, []);
 
     window.addEventListener('resize', mobileResize, true);
     
