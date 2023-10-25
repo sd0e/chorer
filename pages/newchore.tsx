@@ -3,6 +3,7 @@
 import ChoreManager from '@/components/choreManager';
 import ClientShield from '@/components/clientShield';
 import Layout from '@/components/layout';
+import hasPrivileges from '@/scripts/hasPrivileges';
 import styles from '@/styles/CommonPage.module.css';
 import { useRouter } from 'next/router';
 
@@ -10,12 +11,14 @@ import { useRouter } from 'next/router';
 export default function NewChore() {
   const router = useRouter();
   ClientShield(router);
+
+  const userHasPrivileges = hasPrivileges();
   
   return (
     <Layout title="New Chore" leftMenu>
-      <div className={styles.content}>
+      {userHasPrivileges ? <div className={styles.content}>
         <ChoreManager isNew={true} />
-      </div>
+      </div> : <span>You do not have sufficient privileges to access this page.</span>}
     </Layout>
   )
 }

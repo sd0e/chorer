@@ -141,7 +141,7 @@ export default function Chore() {
           <Grid item xs={12}>
             { currentUserId !== data.currentAssignee ? <span style={{ opacity: 0.4 }}>You have little access to this chore as you are not currently assigned.</span> : null }
           </Grid>
-        </Grid> : <span>This chore does not exist.</span>) : <span>Loading...</span> }
+        </Grid> : <span>This chore does not exist. It may be that the chore has completed all of its defined repeat cycles; in this case, you may wish to create a new chore.</span>) : <span>Loading...</span> }
       </div>
     </Layout>
   )

@@ -10,6 +10,7 @@ import MenuItem from './menuItem';
 import { AccountCircleOutlined, AddTaskOutlined, AdminPanelSettingsOutlined, AnalyticsOutlined, DashboardOutlined, SavingsOutlined, SettingsOutlined } from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import { InterClass } from '@/font';
+import hasPrivileges from '@/scripts/hasPrivileges';
 
 // exports the component containing the left menu
 export default function LeftMenu() {
@@ -19,6 +20,8 @@ export default function LeftMenu() {
 
     const isAdmin = getSessionFeature(Feature.IsAdmin);
     const isOwner = getSessionFeature(Feature.IsOwner);
+
+    const userHasPrivileges = hasPrivileges();
 
     // defines whether image appearing in menu is saying that the user is an owner (takes precedence) or admin
     let pillImage = null;
@@ -55,20 +58,22 @@ export default function LeftMenu() {
                     Icon={AccountCircleOutlined}
                     Selected={path === "/users"}
                 />
-                <MenuItem
-                    Title="New Chore"
-                    Route="/newchore"
-                    Color="#573962"
-                    Icon={AddTaskOutlined}
-                    Selected={path === "/newchore"}
-                />
-                <MenuItem
-                    Title="Admin Console"
-                    Route="/admin"
-                    Color="#ff332a"
-                    Icon={AdminPanelSettingsOutlined}
-                    Selected={path === "/admin"}
-                />
+                { userHasPrivileges ? <>
+                    <MenuItem
+                        Title="New Chore"
+                        Route="/newchore"
+                        Color="#573962"
+                        Icon={AddTaskOutlined}
+                        Selected={path === "/newchore"}
+                    />
+                    <MenuItem
+                        Title="Admin Console"
+                        Route="/admin"
+                        Color="#ff332a"
+                        Icon={AdminPanelSettingsOutlined}
+                        Selected={path === "/admin"}
+                    />
+                </> : null }
             </Stack>
         </div>
         <div>

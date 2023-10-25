@@ -101,10 +101,10 @@ export default function ChoreManager({ info, isNew, id, onSave }: { info?:
 		let tempUserList = JSON.parse(thisInfo)["userList"];
 		
 		data.forEach((userInfo: any) => {
-			console.log(userId, userInfo._id);
 			if (userId === userInfo._id) {
 				let tempUser = userInfo;
 				tempUser["numPerCycle"] = 1;
+				tempUser["_id"] = userId;
 				tempUserList.push(tempUser);
 			}
 		});
