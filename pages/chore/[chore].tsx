@@ -14,15 +14,23 @@ export default function Chore() {
   ClientShield(router);
 
   const [loaded, setLoaded] = useState(false);
+  const [data, setData] = useState<any | null>(null);
 
   useEffect(() => {
-    if (router.query.chore) Get(`/chore/${router.query.chore}`);
+    setLoaded(false);
+    if (router.query.chore) Get(`/chore/${router.query.chore}`).then((data: any) => {
+      setData(data.response);
+      setLoaded(true);
+    });
   }, [router.query]);
+
+  // conform type conforms to that required by chore manager
+  const choreId = typeof router.query.chore === 'object' ? router.query.chore[0] : router.query.chore;
   
   return (
-    <Layout title="Chore">
+    <Layout title="Chore" leftMenu>
       <div className={styles.content}>
-        {/* <ChoreManager isNew={false} /> */}
+        { loaded ? (data ? <ChoreManager isNew={false} info={data} id={choreId} /> : <span>This chore does not exist.</span>) : <span>Loading...</span> }
       </div>
     </Layout>
   )

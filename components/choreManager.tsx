@@ -88,6 +88,7 @@ export default function ChoreManager({ info, isNew, id }: { info?:
 	useEffect(() => {
 		Get(`/fullmembers`).then(newData => {
 			setData(newData.response);
+			setCurrUser(newData.response[0]._id);
 		})
 	}, []);
 
@@ -187,7 +188,7 @@ export default function ChoreManager({ info, isNew, id }: { info?:
 			open={userPopupShowing}
 			sx={{ zIndex: 1, color: 'white' }}
 		>
-			<Paper sx={{ backgroundColor: '#ffffff', padding: '32px' }}>
+			{ data ? <Paper sx={{ backgroundColor: '#ffffff', padding: '32px' }}>
 				<Stack direction="column" spacing={4}>
 					{ data ? <Select value={currUser} label="User" onChange={e => setCurrUser(e.target.value)}>
 						{data.map((u: any) => <MenuItem value={u._id} key={u._id}>{ u.name }</MenuItem>)}
@@ -195,7 +196,7 @@ export default function ChoreManager({ info, isNew, id }: { info?:
 					<ActionButton color={ActionButtonColors.Success} Icon={Done} onClick={addUser}>Add</ActionButton>
 					<ActionButton color={ActionButtonColors.Error} Icon={CancelOutlined} onClick={() => setUserPopupShowing(false)}>Cancel</ActionButton>
 				</Stack>
-			</Paper>
+			</Paper>: null }
 		</Backdrop>
 		<Stack direction="column" spacing={4}>
 			<Stack direction="row" spacing={2}>

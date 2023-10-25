@@ -54,7 +54,7 @@ export function Get(path: String): Promise<GetResponse> {
                 }).catch(() => resolve(UnsuccessfulGetResponse));
                 const json = await res?.json();
 
-                if (!res) resolve(UnsuccessfulGetResponse);
+                if (!res || !res.ok) resolve(UnsuccessfulGetResponse);
                 
                 resolve({
                     success: true,
