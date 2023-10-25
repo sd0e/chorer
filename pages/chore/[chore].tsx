@@ -13,6 +13,7 @@ import { utcToRelative } from 'utctorelative';
 import { Edit, UploadFileOutlined } from '@mui/icons-material';
 import hasPrivileges from '@/scripts/hasPrivileges';
 import { InterClass } from '@/font';
+import { getAuth } from 'firebase/auth';
 
 // returns the page component to be served over relevant route
 export default function Chore() {
@@ -26,7 +27,8 @@ export default function Chore() {
     setLoaded(false);
     Get(`/chore/${router.query.chore}`).then((data: any) => {
       setData(data.response);
-      setUploadedProof(data.response.proofFile);
+      if (data.response && data.response.proofFile) setUploadedProof(data.response.proofFile);
+      if (data.response) setCheckboxSelected(data.response.isSubmitted);
       setLoaded(true);
     });
   }
@@ -44,15 +46,16 @@ export default function Chore() {
 
   // allow chore to be submitted by selecting checkbox
   const handleCheckbox = (newValue: boolean) => {
-    console.log(newValue);
     setCheckboxSelected(newValue);
-
     setTempDisabled(true);
 
-    setTempDisabled(false);
+    Post('/submitchore', {
+      value: newValue,
+      id: choreId
+    }).then(() => {
+      setTempDisabled(false);
+    })
   }
-  
-  
 
   // keeps track on whether the user has uploaded proof
   const [uploadedProof, setUploadedProof] = useState<null | string>(null);
@@ -82,6 +85,11 @@ export default function Chore() {
   // if the user has admin privileges, allow them to edit the chore details
   const userHasPrivileges = hasPrivileges();
 
+  // get user's uid to prevent people who are not currently assigned from submitting the chore
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const currentUserId = user?.uid;
+
   return (
     <Layout title="Chore" leftMenu>
       <div className={styles.content}>
@@ -101,7 +109,7 @@ export default function Chore() {
         { loaded ? (data ? <Grid container spacing={4} justifyItems="center" sx={{ maxWidth: '800px' }}>
           <Grid item xs={12}>
             <Stack direction="row" spacing={2} alignItems="center">
-              <Checkbox checked={checkboxSelected} onChange={e => handleCheckbox(e.target.checked)} />
+              <Checkbox checked={checkboxSelected} onChange={e => handleCheckbox(e.target.checked)} disabled={tempDisabled || currentUserId !== data.currentAssignee} />
               <h4>{data.name}</h4>
               { userHasPrivileges ? <IconButton onClick={() => setManagerDialogOpen(true)}>
                 <Edit />
@@ -118,7 +126,7 @@ export default function Chore() {
             <span style={{ color: "#beb455" }}>{data.rewardPoints} points on completion</span>
           </Grid>
           <Grid item xs={12}>
-            <Button variant="outlined" sx={{ width: '192px', height: '144px' }} onClick={() => {
+            <Button variant="outlined" sx={{ width: '192px', height: '144px' }} disabled={currentUserId !== data.currentAssignee} onClick={() => {
               if (uploadedProof) changeProof()
               else setProofDialogOpen(true);
             }}>
@@ -129,6 +137,9 @@ export default function Chore() {
               </Tooltip> : <img src={uploadedProof} alt="Uploaded image proof" style={{ objectFit: 'contain', width: '100%', 
               height: '100%' }} /> }
             </Button>
+          </Grid>
+          <Grid item xs={12}>
+            { currentUserId !== data.currentAssignee ? <span style={{ opacity: 0.4 }}>You have little access to this chore as you are not currently assigned.</span> : null }
           </Grid>
         </Grid> : <span>This chore does not exist.</span>) : <span>Loading...</span> }
       </div>
