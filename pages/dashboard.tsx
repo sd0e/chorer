@@ -104,13 +104,13 @@ export default function Dashboard() {
             </Stack>
             <Stack direction="column" spacing={2}>
               { toggleSelection === 'you' ? ( loadingYourAssignedChores ? <span>Loading</span> : <>{
-                yourAssignedChores.map((chore: any) => {
+                yourAssignedChores.length !== 0 ? yourAssignedChores.map((chore: any) => {
                   return <IndividualChore title={chore.name} due={utcToRelative(chore.dueTime)} overdue={new Date().getTime() > chore.dueTime} isPersonal={true} onClick={() => router.push(`/chore/${chore._id}`)} key={chore._id} onSubmit={() => submitChore(chore._id)} />
-                })
+                }) : <span>You&apos;re all caught up!</span>
               }</> ) : ( loadingAllAssignedChores ? <span>Loading</span> : <>{
-                allAssignedChores.map((chore: any) => {
+                allAssignedChores.length !== 0 ? allAssignedChores.map((chore: any) => {
                   return <IndividualChore key={chore._id} title={chore.name} due={utcToRelative(chore.dueTime)} overdue={new Date().getTime() > chore.dueTime} isPersonal={false} onClick={() => router.push(`/chore/${chore._id}`)} />
-                })
+                }) : <span>You&apos;re all caught up!</span>
               }</> ) }
             </Stack>
           </Stack>
