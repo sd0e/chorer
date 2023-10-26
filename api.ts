@@ -4,7 +4,8 @@
 import { getAuth } from "firebase/auth";
 
 // defines API URL to be used throughout other methods
-const apiUrl = "http://localhost:5000";
+import 'dotenv/config';
+const apiUrl = process.env.API_URL;
 
 // removes any leading slashes from the API URL for accurate parsing
 function parsePath(path: String) {

@@ -1,6 +1,13 @@
 /** @type {import('next').NextConfig} */
 const withTM = require("next-transpile-modules")([
-	"@pusher/push-notifications-web",
-]); // pass the modules you would like to see transpiled
+	"@pusher/push-notifications-web"
+]);
 
-module.exports = withTM();
+const nextConfig = {
+	reactStrictMode: false,
+	env: {
+		API_URL: process.env.API_URL,
+	},
+}
+
+module.exports = withTM(nextConfig);

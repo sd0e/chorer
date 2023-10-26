@@ -45,13 +45,15 @@ export default function Layout({ children, title, leftMenu = false }: { children
         onAuthStateChanged(auth, user => {
             const userId = user?.uid;
 
-            const beamsClient = new PusherPushNotifications.Client({
-                instanceId: '1a4f7c42-a3f3-4b41-b6bb-f510ed9f34e2',
-            });
-            
-            beamsClient.start()
-                .then(() => beamsClient.addDeviceInterest(userId ? userId : 'unauthorised'))
-                .catch(console.error);
+            if (leftMenu) {
+                const beamsClient = new PusherPushNotifications.Client({
+                    instanceId: '1a4f7c42-a3f3-4b41-b6bb-f510ed9f34e2',
+                });
+                
+                beamsClient.start()
+                    .then(() => beamsClient.addDeviceInterest(userId ? userId : 'unauthorised'))
+                    .catch(console.error);
+            }
         });
     }, []);
 
