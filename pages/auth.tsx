@@ -22,6 +22,7 @@ export default function Auth() {
   // define sign-in and sign-out behaviour
   const signIn = () => {
     signInUser(email, password).then(async () => {
+      // save session to cookies and go to dashboard page
       localStorage.session = JSON.stringify((await Get('newsession')).response);
       router.push('/dashboard')
     }).catch(err => window.alert(err.message));
@@ -29,6 +30,7 @@ export default function Auth() {
 
   const signUp = () => {
     createUser(email, password).then(async () => {
+      // save session to cookies and go to onboarding page
       localStorage.session = JSON.stringify((await Get('newsession')).response);
       router.push('/onboarding')
     }).catch(err => {
