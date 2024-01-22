@@ -11,6 +11,7 @@ import CommonPaper from './ui/commonPaper';
 import { useRouter } from 'next/router';
 import { InterClass } from '@/font';
 
+// define a hex colour code type for the chore colour
 export type hex = `#${string}`;
 
 // export the component to be used in other files
@@ -82,6 +83,7 @@ export default function ChoreManager({ info, isNew, id, onSave }: { info?:
 	const [currUser, setCurrUser] = useState<any>(null);
 	const [data, setData] = useState<any>(null);
 
+	// method to show the new user popup
 	const showNewUserPopup = () => {
 		setUserPopupShowing(true);
 	}
@@ -114,6 +116,7 @@ export default function ChoreManager({ info, isNew, id, onSave }: { info?:
 		setUserPopupShowing(false);
 	}
 
+	// define each of the text fields in the component, their types and their properties
 	const textFields = [
 		{
 			"title": "Number of times to repeat",
@@ -153,7 +156,9 @@ export default function ChoreManager({ info, isNew, id, onSave }: { info?:
 		}
 	]
 
+	// calls the respective API endpoint to update the chore
 	const save = () => {
+		// extract info from state
 		const info: {
 			name: string,
 			color: hex,
@@ -165,6 +170,7 @@ export default function ChoreManager({ info, isNew, id, onSave }: { info?:
 			rewardPoints: number,
 			overdueDailyRewardDecrease: number
 		} = JSON.parse(thisInfo);
+		// validate inputs before sending to server
 		if (info.repeatTimes < 1 || info.repeatFrequency < 86400000 || info.notificationTimeBeforeOverdue < 1 || info.notificationTimeBeforeOverdue < 1 || info.rewardPoints < 0 || info.overdueDailyRewardDecrease < 0) {
 			window.alert('Values must be positive integers.');
 		} else if (info.name === "") {
@@ -194,12 +200,14 @@ export default function ChoreManager({ info, isNew, id, onSave }: { info?:
 		}
 	}
 
+	// if delete button pressed, call the delete chore endpoint
 	const deleteChore = () => {
 		Post('/deletechore', { id: id }).then(() => {
 			router.push('/admin');
 		})
 	}
 
+	// return the component for use in other components, with Material UI arrangements
 	return <div className={InterClass}>
 		<ThemeProvider theme={theme}>
 			<Backdrop

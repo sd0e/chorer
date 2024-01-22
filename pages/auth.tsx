@@ -21,6 +21,11 @@ export default function Auth() {
 
   // define sign-in and sign-out behaviour
   const signIn = () => {
+    if (!email || !password) {
+      window.alert('Both email and password required');
+      return;
+    }
+
     signInUser(email, password).then(async () => {
       // save session to cookies and go to dashboard page
       localStorage.session = JSON.stringify((await Get('newsession')).response);
@@ -29,6 +34,11 @@ export default function Auth() {
   }
 
   const signUp = () => {
+    if (!email || !password) {
+      window.alert('Both email and password required');
+      return;
+    }
+    
     createUser(email, password).then(async () => {
       // save session to cookies and go to onboarding page
       localStorage.session = JSON.stringify((await Get('newsession')).response);
