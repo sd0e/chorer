@@ -27,21 +27,26 @@ export default function Onboarding() {
       window.alert('Household name too long');
       return;
     }
-    
+
     if (householdId.length !== 8) {
       window.alert('Check that your ID is of the correct format');
       return;
     }
 
     const res = await Post('/apply', { id: householdId, name: name });
-    if (res.success) {
-      // updates session
-      localStorage.session = JSON.stringify((await Get('newsession')).response);
-      // routes user to pending page if the API call was a success
-      router.push('/pending');
+    if (res.response === 'Household does not exist') {
+      window.alert('Household does not exist');
     } else {
-      window.alert('There was an issue.');
-    };
+      if (res.success) {
+        // updates session
+        localStorage.session = JSON.stringify((await Get('newsession')).response);
+        // routes user to pending page if the API call was a success
+        router.push('/pending');
+      } else {
+        console.log(res);
+        window.alert('There was an issue.');
+      };
+    }
   }
 
   // called when user clicks Create button, creates a household and assigns that user to the household
