@@ -23,6 +23,11 @@ export default function Onboarding() {
 
   // called when user clicks Apply button, adds information to database to say that they have applied to the household
   const apply = async () => {
+    if (householdName.length > 20) {
+      window.alert('Household name too long');
+      return;
+    }
+    
     if (householdId.length !== 8) {
       window.alert('Check that your ID is of the correct format');
       return;
@@ -41,6 +46,11 @@ export default function Onboarding() {
 
   // called when user clicks Create button, creates a household and assigns that user to the household
   const create = async () => {
+    if (householdName.length > 20) {
+      window.alert('Household name too long');
+      return;
+    }
+
     const res = await Post('/newhousehold', { householdName: householdName, name: name });
     if (res.success) {
       // updates session

@@ -26,6 +26,11 @@ export default function Auth() {
       return;
     }
 
+    if (!email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+      window.alert('Email address not of correct format');
+      return;
+    }
+
     signInUser(email, password).then(async () => {
       // save session to cookies and go to dashboard page
       localStorage.session = JSON.stringify((await Get('newsession')).response);
@@ -38,7 +43,12 @@ export default function Auth() {
       window.alert('Both email and password required');
       return;
     }
-    
+
+    if (!email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+      window.alert('Email address not of correct format');
+      return;
+    }
+
     createUser(email, password).then(async () => {
       // save session to cookies and go to onboarding page
       localStorage.session = JSON.stringify((await Get('newsession')).response);
