@@ -27,6 +27,11 @@ export default function Onboarding() {
       window.alert('Household name too long');
       return;
     }
+    
+    if (name.length > 20) {
+      window.alert('Username too long');
+      return;
+    }
 
     if (householdId.length !== 8) {
       window.alert('Check that your ID is of the correct format');
@@ -53,6 +58,11 @@ export default function Onboarding() {
   const create = async () => {
     if (householdName.length > 20) {
       window.alert('Household name too long');
+      return;
+    }
+    
+    if (name.length > 20) {
+      window.alert('Username too long');
       return;
     }
 
