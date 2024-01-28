@@ -121,7 +121,7 @@ export default function ChoreManager({ info, isNew, id, onSave }: { info?:
 		{
 			"title": "Number of times to repeat",
 			"propKey": "repeatTimes",
-			"onChange": (e: any) => updateProp("repeatTimes", e.target.value),
+			"onChange": (e: any) => updateProp("repeatTimes", Number(e.target.value)),
 			"type": "number"
 		},
 		{
@@ -133,7 +133,7 @@ export default function ChoreManager({ info, isNew, id, onSave }: { info?:
 		{
 			"title": "Hours before due time to send reminder",
 			"propKey": "notificationTimeBeforeOverdue",
-			"onChange": (e: any) => updateProp("notificationTimeBeforeOverdue", e.target.value),
+			"onChange": (e: any) => updateProp("notificationTimeBeforeOverdue", Number(e.target.value)),
 			"type": "number"
 		},
 		{
@@ -145,13 +145,13 @@ export default function ChoreManager({ info, isNew, id, onSave }: { info?:
 		{
 			"title": "Reward points",
 			"propKey": "rewardPoints",
-			"onChange": (e: any) => updateProp("rewardPoints", e.target.value),
+			"onChange": (e: any) => updateProp("rewardPoints", Number(e.target.value)),
 			"type": "number"
 		},
 		{
 			"title": "Daily overdue reward point decrease",
 			"propKey": "overdueDailyRewardDecrease",
-			"onChange": (e: any) => updateProp("overdueDailyRewardDecrease", e.target.value),
+			"onChange": (e: any) => updateProp("overdueDailyRewardDecrease", Number(e.target.value)),
 			"type": "number"
 		}
 	]
@@ -171,12 +171,18 @@ export default function ChoreManager({ info, isNew, id, onSave }: { info?:
 			overdueDailyRewardDecrease: number
 		} = JSON.parse(thisInfo);
 		// validate inputs before sending to server
-		if (info.repeatTimes < 1 || info.repeatFrequency < 86400000 || info.notificationTimeBeforeOverdue < 1 || info.notificationTimeBeforeOverdue < 1 || info.rewardPoints < 0 || info.overdueDailyRewardDecrease < 0) {
+		if (info.repeatTimes < 1 || !Number.isInteger(info.repeatTimes) || info.repeatFrequency < 86400000 || info.notificationTimeBeforeOverdue < 1 || info.notificationTimeBeforeOverdue < 1 || info.rewardPoints < 0 || !Number.isInteger(info.rewardPoints) || info.overdueDailyRewardDecrease < 0) {
 			window.alert('Values must be positive integers.');
 		} else if (info.name === "") {
 			window.alert('The chore must have a name.');
 		} else if ((info.userList as any).length === 0) {
 			window.alert('There must be users allocated to the chore.');
+		} else if (info.name.length >= 200) {
+			window.alert('The chore name must not exceed 200 characters.');
+		} else if (!info.color.includes('#') || info.color.length !== 7) {
+			window.alert('The chore colour must be a hexadecimal code.');
+		} else if (info.completeAction !== '' && !info.completeAction.startsWith('https://')) {
+			window.alert('The webhook URL must be a full URL.');
 		} else {
 			// can be submitted
 			if (isNew) {
