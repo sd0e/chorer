@@ -71,12 +71,16 @@ export default function Chore() {
         id: choreId
       })
     } else {
-      setProofDialogOpen(false);
-      setUploadedProof(tempProof);
-      Post('/updateproof', {
-        proof: tempProof,
-        id: choreId
-      });
+      if (tempProof.startsWith('https://')) {
+        setProofDialogOpen(false);
+        setUploadedProof(tempProof);
+        Post('/updateproof', {
+          proof: tempProof,
+          id: choreId
+        });
+      } else {
+        window.alert('The proof URL must be a full URL of an image on the Internet.');
+      }
     }
   }
 
