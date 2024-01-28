@@ -49,10 +49,13 @@ export default function Points() {
     if (!pointsToDeduct) {
       window.alert('Transaction cancelled');
       return;
-    } 
+    } else if (!Number.isInteger(pointsToDeduct)) {
+      window.alert('You may not deduct a fractional number of points');
+      return;
+    }
     const newBalance = userBalance - pointsToDeduct;
     if (newBalance < 0) {
-      window.alert('Too many points deducted');
+      window.alert('A user\'s point balance may not go below zero');
     } else {
       Post('/deduct', { points: pointsToDeduct, uid: userId }).then(() => window.location.reload());
     }
