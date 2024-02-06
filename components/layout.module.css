@@ -18,8 +18,10 @@
 
 .containerInnerWithMenuMobile {
 	width: calc(100% - 6rem);
-	height: calc(100% - 6rem);
+	height: calc(100vh - 24rem);
 	padding: 3rem;
+	padding-bottom: 12rem;
+	overflow-y: auto;
 }
 
 .main {

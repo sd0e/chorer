@@ -77,7 +77,7 @@ export default function Layout({ children, title, leftMenu = false }: { children
                 </SwipeableDrawer> : null }
                 <div className={leftMenu ? styles.centralContainerLeftMenuMobile : styles.centralContainer}>
                     { /* framer motion component which uses animation when it enters */}
-                    <MobileHeader openMenu={() => setMenuOpen(true)} />
+                    { leftMenu ? <MobileHeader openMenu={() => setMenuOpen(true)} /> : null }
                     <motion.div
                         className={leftMenu ? styles.containerInnerWithMenuMobile : styles.containerInner}
                         variants={variants}
